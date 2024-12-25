@@ -5,7 +5,7 @@ import shap
 import matplotlib.pyplot as plt
 
 # 加载保存的模型
-model_path = "lightgbm_model.joblib"  # 替换为实际路径
+model_path = "lightgbm_model.joblib"  
 loaded_model = load(model_path)
 
 
@@ -14,11 +14,11 @@ explainer = shap.TreeExplainer(loaded_model)
 
 
 # 应用标题
-st.title("多模型耦合的PM2.5归因预测应用")
+st.title("LightGBM机器学习模型+Hysplit后向轨迹模型+PMF源解析模型+SHAP可解释耦合的在线PM2.5浓度预测及归因应用")
 
 # 描述
 st.markdown("""
-这是一个基于 Streamlit 的 Web 应用，用户可以通过输入特征值来调用 LightGBM 模型对PM2.5归因预测。
+这是一个基于 Streamlit 的 Web 应用，用户可以通过输入特征值来调用 LightGBM 模型对PM2.5浓度进行预测并进行归因解释。
 """)
 
 # 提供模型的特征名称
@@ -42,7 +42,7 @@ feature_names = [  "Ox(NO2+O3)"
                  ]
 
 # 获取用户输入
-st.header("输入特征数据")
+st.header("请对应输入特征数据")
 feature_inputs = {}
 
 for feature_name in feature_names:
@@ -56,10 +56,10 @@ st.subheader("输入数据")
 st.write(input_data)
 
 # 预测逻辑
-if st.button("归因预测"):
+if st.button("PM2.5浓度预测"):
     prediction = loaded_model.predict(input_data)
-    st.subheader("归因预测结果")
-    st.write(f"归因预测值: {prediction[0]:.2f}")
+    st.subheader("浓度预测结果")
+    st.write(f"浓度预测值: {prediction[0]:.2f}")
 
     # 生成 SHAP 解释
     shap_values = explainer.shap_values(input_data)
@@ -68,7 +68,7 @@ if st.button("归因预测"):
     explanation = shap.Explanation(values=shap_values[0], base_values=explainer.expected_value, data=input_data.values[0], feature_names=feature_names)
   
     # 显示 SHAP 水瀑图
-    st.subheader("SHAP 解释")
+    st.subheader("运用SHAP算法进行预测解释")
     fig, ax = plt.subplots(figsize=(10, 6))
   
     shap.waterfall_plot(explanation, max_display=25, show=False)
