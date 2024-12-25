@@ -64,6 +64,8 @@ if st.button("归因预测"):
     # 生成 SHAP 解释
     shap_values = explainer.shap_values(input_data)
   
+      # 打印 SHAP 值，帮助调试
+    st.write(shap_values)
   
     # 显示 SHAP 水瀑图
     st.subheader("SHAP 解释")
