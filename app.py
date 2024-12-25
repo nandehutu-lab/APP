@@ -67,5 +67,5 @@ if st.button("归因预测"):
     # 显示 SHAP 水瀑图
     st.subheader("SHAP 解释")
     fig, ax = plt.subplots(figsize=(10, 6))
-    shap.waterfall_plot(shap_values[0], max_display=25, show=False)
+    shap.waterfall_plot(shap_values[0][0], max_display=25, show=False)
     st.pyplot(fig)  # 使用 Streamlit 展示 matplotlib 图形
